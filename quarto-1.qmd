@@ -2,5 +2,53 @@
 title: "Quarto 1"
 author: "Afnan Khan"
 format: html
+execute: 
+  echo: false
 ---
+
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+library(palmerpenguins)
+
+
+```
+
+```{r}
+
+#| label: penguin-plot
+library(ggthemes)
+
+# Filter out rows with missing values for flipper_length_mm or body_mass_g
+penguins_clean <- penguins %>% 
+  drop_na(flipper_length_mm, body_mass_g)
+
+# Create the scatter plot
+ggplot(data = penguins_clean, aes(x = flipper_length_mm, y = body_mass_g, color = species, shape = species)) +
+  geom_point(size = 3, alpha = 0.8) +
+  scale_color_manual(values = c("Adelie" = "#FF6B6B", "Chinstrap" = "#4ECDC4", "Gentoo" = "#1A535C")) +
+  scale_shape_manual(values = c("Adelie" = 16, "Chinstrap" = 17, "Gentoo" = 15)) +
+  labs(
+    title = "Penguin Flipper Length vs. Body Mass by Species",
+    subtitle = "Data from the Palmer Penguins Dataset",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)",
+    color = "Species",
+    shape = "Species"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16, color = "#2D3748"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12, color = "#4A5568"),
+    axis.title = element_text(face = "bold", color = "#2D3748"),
+    legend.position = "top",
+    legend.title = element_text(face = "bold"),
+    panel.grid.major = element_line(color = "#E2E8F0", linewidth = 0.5),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "#F7FAFC", color = NA)
+  )
+
+```
+
+
 
